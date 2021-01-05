@@ -1,0 +1,28 @@
+{
+	"name": "scrums-manager",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"start": "cross-env NODE_ENV=production node index",
+		"dev": "cross-env NODE_ENV=devlopment nodemon index"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/marmikupadhyay/scrums-manager.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/marmikupadhyay/scrums-manager/issues"
+	},
+	"homepage": "https://github.com/marmikupadhyay/scrums-manager#readme",
+	"dependencies": {
+		"cross-env": "^7.0.2",
+		"dotenv": "^8.2.0",
+		"express": "^4.17.1",
+		"mongoose": "^5.10.10",
+		"morgan": "^1.10.0"
+	}
+}
