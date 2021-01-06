@@ -1,15 +1,16 @@
-import Scrum from './../../models/Scrum';
-import ScrumItem from './../../models/ScrumItem';
+const Scrum = require('../../models/Scrum');
+const ScrumItem = require('../../models/ScrumItem');
+
 
 const ScrumController = {
-	getScrumDetails(req, res, next) {
+	async getScrumDetails(req, res, next){
 		const allScrums = await Scrum.find({});
 		res.status(200).json({
 			message: 'Scrum Details Fetched Succesfully',
 			data: allScrums,
 		});
 	},
-	createNewScum(req, res, next){
+	async createNewScum(req, res, next){
 		const body = req.body;
 		let date = body.date;
 		let scrum = new Scrum({
@@ -25,7 +26,7 @@ const ScrumController = {
 			throw err;
 		}
 	},
-	addScrumItem(req,res,next){
+	async addScrumItem(req,res,next){
 		const body = req.body;
 		const scrumItem = new ScrumItem({
 			author:body.author,
