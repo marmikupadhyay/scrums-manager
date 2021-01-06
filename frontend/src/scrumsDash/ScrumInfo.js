@@ -23,7 +23,7 @@ function ScrumInfo(props) {
 			<FilterTags tagData={tagData} />
 			{currentActive.member_info.map((memberInfo, index)=>{
 				memberInfo.color = colors[Math.floor(Math.random() * colors.length)][500]
-				return <ScrumInfoCard memberInfo={memberInfo} key={memberInfo.user_id}/>
+				return <ScrumInfoCard memberInfo={memberInfo} key={`scrum${currentActive._id}user${memberInfo.user_id}`}/>
 			})}
 		</div>
 	);
