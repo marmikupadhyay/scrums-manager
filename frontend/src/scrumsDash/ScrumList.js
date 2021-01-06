@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import {
 	Grid,
@@ -41,40 +41,51 @@ const useStyles = makeStyles((theme) => ({
 	},
 	listItem: {
 		boxShadow: theme.shadows[3],
+		background: 'rgb(0, 21, 36)',
+		margin: '1em 0',
+		transition: '0.5s',
+		cursor: 'pointer',
+		'&:hover': {
+			transform: 'scale(1.05)',
+		},
+		borderLeft: `2px solid ${theme.palette.accent.primary}`,
+	},
+	listActive: {
+		background: 'rgb(0, 21, 36)',
+		boxShadow: theme.shadows[3],
+		transition: '0.5s',
+		cursor: 'pointer',
+		padding: '15px 0',
+		fontSize: '1.1em',
 		margin: '1em 0',
 		borderLeft: `7px solid ${theme.palette.accent.primary}`,
+		transform: 'scale(1.05)',
 	},
 	icon: {
 		color: theme.palette.font.light,
 		fontSize: '2em',
 	},
 }));
-function ScrumList() {
+function ScrumList(props) {
 	const classes = useStyles();
-	const dummyData = [
-		{
-			date: '2 Dec, 2020',
-		},
-		{
-			date: '15 Dec, 2020',
-		},
-		{
-			date: '28 Dec, 2020',
-		},
-		{
-			date: '5 Jan, 2020',
-		},
-	];
 	return (
 		<Grid container item direction='column' className={classes.mainBody}>
 			<Grid item className={classes.title}>
-				Scrums Archive
+				History
 			</Grid>
 			<Grid item className={classes.listBox}>
 				<List>
-					{dummyData.map((scrum) => {
+					{props.allScrums.map((scrum, index) => {
 						return (
-							<ListItem className={classes.listItem}>
+							<ListItem
+								onClick={() => {
+									props.selectScrum(scrum._id);
+								}}
+								className={
+									scrum._id == props.currentActive._id
+										? classes.listActive
+										: classes.listItem
+								}>
 								<ListItemIcon>
 									<ChevronRightIcon
 										className={classes.icon}

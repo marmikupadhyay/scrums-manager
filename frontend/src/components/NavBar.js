@@ -41,7 +41,7 @@ function NavBar() {
 					<PlaylistAddCheckIcon
 						style={{ fontSize: '1.5em', paddingRight: '10px' }}
 					/>
-					Scrums Manager
+					Scrums Archive
 				</Grid>
 				<Link to='/login' className={classes.link}>
 					<Button color='inherit' className={classes.button}>
