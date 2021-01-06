@@ -10,28 +10,131 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const dummyData = [
+const tagDataDummy = [
+    {name:"ML"}, {name:"React"}
+]
+
+let dummyData = [
 	{
 		_id: '1',
 		date: '2 Dec, 2020',
+		member_info:[
+			{
+				user_id:'id1',
+				name:'Tenz1',
+				info:'i am jett1 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			},
+			{
+				user_id:'id2',
+				name:'Hiko1',
+				info:'i am sova1 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			}
+		]
 	},
 	{
 		_id: '2',
 		date: '15 Dec, 2020',
+		member_info:[
+			{
+				user_id:'id1',
+				name:'Tenz2',
+				info:'i am jett2 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			},
+			{
+				user_id:'id2',
+				name:'Hiko2',
+				info:'i am sova2 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			}
+		]
 	},
 	{
 		_id: '3',
 		date: '28 Dec, 2020',
-	},
-	{
-		_id: '4',
-		date: '5 Jan, 2020',
+		member_info:[
+			{
+				user_id:'id1',
+				name:'Tenz3',
+				info:'i am jett3 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			},
+			{
+				user_id:'id2',
+				name:'Hiko3',
+				info:'i am sova3 main and i am pro',
+				time:"September 14, 2016 17:36",
+				tags:[
+					{
+						tag_id:"tag1",
+						label:"React"
+					},
+					{
+						tag_id:"tag2",
+						label:"ML"
+					}
+				]
+			}
+		]
 	},
 ];
 
 function ScrumDash() {
 	const classes = useStyles();
 	const [allScrums, setAllScrums] = useState(dummyData);
+	const [tagData, setTagData] = useState(tagDataDummy);
 	const [currentActive, setCurrentActive] = useState(allScrums[0]);
 
 	const selectScrum = (id) => {
@@ -51,7 +154,7 @@ function ScrumDash() {
 					/>
 				</Grid>
 				<Grid item xs={12} md={8} lg={9}>
-					<ScrumInfo />
+					<ScrumInfo currentActive={currentActive} tagData={tagData}/>
 				</Grid>
 			</Grid>
 		</div>
