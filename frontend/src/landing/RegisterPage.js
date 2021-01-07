@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	backDrop: {
@@ -86,6 +87,42 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterPage() {
 	const classes = useStyles();
+	
+	const [userData, setUserData] = useState({
+		username: '',
+		email: '',
+		password: ''
+	});
+
+	const handleChange = (e) => {
+		// console.log(e.target.value);
+		setUserData({
+			...userData,
+			[e.target.id]: e.target.value
+		});
+
+		console.log(userData);
+
+		
+	}
+
+	const submitForm = (e) => {
+		console.log(e.target);
+
+		const headers = {
+			'Content-Type': 'application/json',
+		};
+
+		const uri = 'http://localhost:8000/auth/register';
+		axios.post(uri,userData,{ headers: headers })
+			.then((response)=>{
+				console.log(response);
+			})
+			.catch((e)=>{
+				console.log(e);
+			})
+		
+	};
 	return (
 		<Grid container className={classes.backDrop}>
 			<div className={classes.siteHeadingBox}>
@@ -109,16 +146,27 @@ function RegisterPage() {
 								label='Username'
 								variant='outlined'
 								className={classes.inputs}
+								onChange={handleChange}
+							/>
+							<TextField
+								id='email'
+								label='Email'
+								variant='outlined'
+								className={classes.inputs}
+								onChange={handleChange}
 							/>
 							<TextField
 								id='password'
 								label='Password'
 								variant='outlined'
 								className={classes.inputs}
+								onChange={handleChange}
 							/>
 							<Button
 								variant='contained'
-								className={classes.button}>
+								className={classes.button}
+								onClick={submitForm}
+							>
 								Make Account
 							</Button>
 						</form>

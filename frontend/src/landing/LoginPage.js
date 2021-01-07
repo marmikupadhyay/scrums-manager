@@ -1,7 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Button, Grid, TextField } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
 	backDrop: {
@@ -85,6 +86,45 @@ const useStyles = makeStyles((theme) => ({
 }));
 function LoginPage() {
 	const classes = useStyles();
+
+	const [userData, setUserData] = useState({
+		username: '',
+		password: ''
+	});
+
+	const handleChange = (e) => {
+		// console.log(e.target.value);
+		setUserData({
+			...userData,
+			[e.target.id]: e.target.value
+		});
+
+		console.log(userData);
+	}
+
+	const submitForm = (e) => {
+		console.log(e.target);
+
+		const headers = {
+			'Content-Type': 'application/json',
+		};
+
+		const uri = 'http://localhost:8000/auth/login';
+		axios.post(uri,userData,{ headers: headers })
+			.then((response)=>{
+				// console.log('response',response);
+				// console.log(localStorage.getItem('x-auth-token'));
+				localStorage.setItem('x-auth-token', response.data.token);
+				console.log(localStorage.getItem('x-auth-token'));
+
+			})
+			.catch((e)=>{
+				console.log(e);
+			})
+		
+	};
+
+
 	return (
 		<Grid container className={classes.backDrop}>
 			<div className={classes.siteHeadingBox}>
@@ -108,16 +148,20 @@ function LoginPage() {
 								label='Username'
 								variant='outlined'
 								className={classes.inputs}
+								onChange={handleChange}
 							/>
 							<TextField
 								id='password'
 								label='Password'
 								variant='outlined'
 								className={classes.inputs}
+								onChange={handleChange}
 							/>
 							<Button
 								variant='contained'
-								className={classes.button}>
+								className={classes.button}
+								onClick={submitForm}
+							>
 								Get In
 							</Button>
 						</form>

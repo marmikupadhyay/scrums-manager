@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const morgan = require('morgan');
+const cors = require('cors');
 const UserRoutes = require('./api/routes/UserRoutes');
 const ScrumRoutes = require('./api/routes/ScrumRoutes');
 const AuthRoutes = require('./api/routes/AuthRoutes');
@@ -8,6 +9,7 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 app.use(morgan('dev'));
+app.use(cors());
 
 mongoose.connect(process.env.DB_URL, {
 	useUnifiedTopology: true,
