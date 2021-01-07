@@ -13,6 +13,11 @@ mongoose.connect(process.env.DB_URL, {
 	useNewUrlParser: true,
 });
 
+//BODY PARSER
+app.use(express.urlencoded({ extended: false }));
+app.use(express.raw());
+app.use(express.json());
+
 let db = mongoose.connection;
 
 db.once('open', () => {
@@ -24,7 +29,7 @@ db.on('error', (err) => {
 });
 
 app.use('/api/user', UserRoutes);
-app.use('/api/sheet', ScrumRoutes);
+app.use('/api/scrum', ScrumRoutes);
 app.use((req, res, next) => {
 	res.status(404).json({ message: 'Enter Correct Route' });
 });
