@@ -43,7 +43,7 @@ let dummyData = [
 				tags:[
 					{
 						tag_id:"tag1",
-						label:"React"
+						label:"Vue"
 					},
 					{
 						tag_id:"tag2",

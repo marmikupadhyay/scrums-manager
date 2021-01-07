@@ -19,53 +19,28 @@ const useStyles = makeStyles((theme) => ({
 function ScrumInfo(props) {
 	const {currentActive, tagData} = props
 	const classes = useStyles();
-	const [searchfield, setsearchfield] = useState('');
+	const [searchLabel, setSearchLabel] = useState('React');
     const handleinput = (e) => {
 
-        setsearchfield(e.target.value);
+        setSearchLabel(e.target.value);
 
 	};
 
-	console.log(currentActive)
+	let filterdata = {...currentActive}
+	filterdata.member_info = []
+	currentActive.member_info.forEach(ele=>{
+		if(searchLabel) {
+			let includes = false
+			ele.tags.forEach(tag => {
+				if(tag.label === searchLabel) includes = true
+			})
+			if(includes) filterdata.member_info.push(ele)
+		} else {
+			filterdata.member_info.push(ele)
+		}
+	})
 
-	if(!currentActive)
-	{
-			
-		currentActive = [
-		{
-				_id: '1',
-		date: '2 Dec, 2020',
-		member_info:[
-			{
-				user_id:'Loading...',
-				name:'Loading...',
-				info:'Loading...',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			}
-		    ]
-		  }
-		]
- 
-	}
-
-	const filterdata = currentActive.member_Info.filter((meminfo) => {
-
-	     meminfo.tags.map((tagitem) => {
-
-			return tagitem.label.toLowerCase().includes(searchfield.toLocaleLowerCase());
-		 });
-
-	});
+	console.log(filterdata)
 
 	return (
 		<div>
