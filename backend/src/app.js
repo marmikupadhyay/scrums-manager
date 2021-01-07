@@ -3,6 +3,7 @@ const app = express();
 const morgan = require('morgan');
 const UserRoutes = require('./api/routes/UserRoutes');
 const ScrumRoutes = require('./api/routes/ScrumRoutes');
+const AuthRoutes = require('./api/routes/AuthRoutes');
 const mongoose = require('mongoose');
 require('dotenv').config();
 
@@ -39,6 +40,8 @@ app.use((req, res, next) => {
 
 app.use('/api/user', UserRoutes);
 app.use('/api/scrum', ScrumRoutes);
+app.use('/auth', AuthRoutes);
+
 app.use((req, res, next) => {
 	res.status(404).json({ message: 'Enter Correct Route' });
 });
