@@ -18,7 +18,8 @@ export const FilterTags = (props) => {
 
 	return (
 		<Autocomplete
-            options={tagData}
+			options={tagData}
+			onChange={props.handleinput}
             className={classes.auto}
 			getOptionSelected={(option, value) => option.name === value.name}
 			getOptionLabel={(option) => option.name ?? ''}
