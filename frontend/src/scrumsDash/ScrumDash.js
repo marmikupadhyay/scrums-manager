@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import ScrumList from './ScrumList';
 import ScrumInfo from './ScrumInfo';
+import Axios from 'axios';
 
 import { Grid } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
@@ -10,138 +11,34 @@ const useStyles = makeStyles((theme) => ({
 	},
 }));
 
-const tagDataDummy = [
-    {name:"ML"}, {name:"React"}
-]
-
-let dummyData = [
-	{
-		_id: '1',
-		date: '2 Dec, 2020',
-		member_info:[
-			{
-				user_id:'id1',
-				name:'Tenz1',
-				info:'i am jett1 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			},
-			{
-				user_id:'id2',
-				name:'Hiko1',
-				info:'i am sova1 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			}
-		]
-	},
-	{
-		_id: '2',
-		date: '15 Dec, 2020',
-		member_info:[
-			{
-				user_id:'id1',
-				name:'Tenz2',
-				info:'i am jett2 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			},
-			{
-				user_id:'id2',
-				name:'Hiko2',
-				info:'i am sova2 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			}
-		]
-	},
-	{
-		_id: '3',
-		date: '28 Dec, 2020',
-		member_info:[
-			{
-				user_id:'id1',
-				name:'Tenz3',
-				info:'i am jett3 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			},
-			{
-				user_id:'id2',
-				name:'Hiko3',
-				info:'i am sova3 main and i am pro',
-				time:"September 14, 2016 17:36",
-				tags:[
-					{
-						tag_id:"tag1",
-						label:"React"
-					},
-					{
-						tag_id:"tag2",
-						label:"ML"
-					}
-				]
-			}
-		]
-	},
-];
+const tagDataDummy = [{ name: 'ML' }, { name: 'React' }];
 
 function ScrumDash() {
 	const classes = useStyles();
-	const [allScrums, setAllScrums] = useState(dummyData);
+	const [allScrums, setAllScrums] = useState([]);
 	const [tagData, setTagData] = useState(tagDataDummy);
-	const [currentActive, setCurrentActive] = useState(allScrums[0]);
+	const [currentActive, setCurrentActive] = useState({});
 
 	const selectScrum = (id) => {
 		allScrums.forEach((scrum) => {
 			if (id === scrum._id) setCurrentActive(scrum);
 		});
 	};
+
+	useEffect(() => {
+		Axios.get('http://localhost:8000/api/scrum/allScrums')
+			.then((res) => {
+				res.data.data.forEach((scrum) => {
+					let d = new Date(scrum.date);
+					scrum.date = d.toDateString();
+				});
+				setAllScrums(res.data.data);
+				setCurrentActive(res.data.data[0]);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
 
 	return (
 		<div className={classes.mainBody}>
@@ -154,7 +51,10 @@ function ScrumDash() {
 					/>
 				</Grid>
 				<Grid item xs={12} md={8} lg={9}>
-					<ScrumInfo currentActive={currentActive} tagData={tagData}/>
+					<ScrumInfo
+						currentActive={currentActive}
+						tagData={tagData}
+					/>
 				</Grid>
 			</Grid>
 		</div>
